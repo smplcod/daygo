@@ -6,7 +6,6 @@ import TimeDistribution from "./components/TimeDistribution";
 import TimeInput from "./components/TimeInput";
 
 function App() {
-  // Добавляем начальные тестовые задачи
   const initialTasks = [
     { name: "Задача1", duration: "0:30" },
     { name: "Задача2", duration: "0:30" },
@@ -21,6 +20,7 @@ function App() {
       parseInt(task.duration.split(":")[1], 10) / 60,
   }));
 
+  const [startTime, setStartTime] = useState("");
   const [tasks, setTasks] = useState(initialTasks);
   const [workTime, setWorkTime] = useState(8);
 
@@ -40,11 +40,20 @@ function App() {
     });
   };
 
+  const handleStartTimeChange = (newStartTime) => {
+    setStartTime(newStartTime);
+  };
+
   return (
     <>
       <TimeInput onSetWorkTime={setWorkTime} />
       <TaskInput onAddTask={handleAddTask} />
-      <TimeDistribution tasks={tasks} workTime={workTime} />
+      <TimeDistribution
+        tasks={tasks}
+        workTime={workTime}
+        startTime={startTime}
+      />
+
       <TaskList
         tasks={tasks}
         onRemoveTask={handleRemoveTask}

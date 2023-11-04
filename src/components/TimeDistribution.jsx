@@ -1,53 +1,41 @@
 import React from "react";
 
-const TimeDistribution = ({ tasks, workTime }) => {
-  // функция для преобразования времени задачи в минуты
-  const convertToMinutes = (hours) => hours * 60;
+const TimeDistribution = ({ tasks }) => {
+  const startTime = new Date(); // начало рабочего дня
+  startTime.setHours(8, 0, 0, 0); // устанавливаем начало дня в 8 утра
 
-  // общее доступное время для работы в минутах
-  const totalWorkMinutes = convertToMinutes(workTime);
-
-  // расчет общей длительности задач в минутах
-  const totalTasksDurationMinutes = tasks.reduce(
-    (acc, task) => acc + convertToMinutes(task.duration),
-    0
-  );
-
-  // проверка превышения общей длительности задач над доступным временем
-  if (totalTasksDurationMinutes > totalWorkMinutes) {
-    console.error(
-      "Суммарная длительность задач превышает доступное рабочее время!"
+  const formatTime = (date) => {
+    return (
+      date.getHours() +
+      ":" +
+      (date.getMinutes() < 10 ? "0" : "") +
+      date.getMinutes()
     );
-  }
-
-  // Функция для форматирования времени в формате "ч:мм"
-  const formatTime = (minutes) => {
-    const hours = Math.floor(minutes / 60);
-    const mins = Math.round(minutes % 60);
-    return `${hours}:${mins < 10 ? "0" : ""}${mins}`;
   };
 
-  // распределение времени с округлением до ближайшей целой минуты
-  const distributeTime = () => {
-    return tasks.map((task) => {
-      const taskTimeMinutes = convertToMinutes(task.duration);
-      const distributedTime = Math.round(
-        totalWorkMinutes * (taskTimeMinutes / totalTasksDurationMinutes)
-      );
-      return { ...task, distributedTime: formatTime(distributedTime) };
-    });
+  // Функция для получения интервала времени для задачи
+  const getTimeInterval = (duration, index) => {
+    const start = new Date(
+      startTime.getTime() +
+        tasks
+          .slice(0, index)
+          .reduce((sum, task) => sum + task.duration * 3600000, 0)
+    );
+    const end = new Date(start.getTime() + duration * 3600000);
+    return `${formatTime(start)} — ${formatTime(end)}`;
   };
-
-  const distributedTasks = distributeTime();
 
   return (
     <div>
       <h2>Распределение времени</h2>
-      {distributedTasks.map((task, index) => (
-        <div key={index}>
-          {task.name}: {task.distributedTime}
-        </div>
-      ))}
+      <ul>
+        {tasks.map((task, index) => (
+          <li key={index}>
+            {task.name}: {task.duration.toFixed(2).replace(".", ":")} (
+            {getTimeInterval(task.duration, index)})
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

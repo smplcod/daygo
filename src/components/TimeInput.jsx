@@ -69,16 +69,29 @@ function TimeInput({ onSetWorkTime }) {
         width: "300px",
       }}
     >
-      <label>
-        Начало рабочего дня:
-        <input type="time" value={startTime} onChange={handleStartTimeChange} />
-      </label>
-      <br />
-      <label>
-        Конец рабочего дня:
-        <input type="time" value={endTime} onChange={handleEndTimeChange} />
-      </label>
-      <p>Длительность рабочего дня: {workDuration}</p>
+      <div style={{ marginBottom: "10px" }}>
+        <label htmlFor="start-time">Начало рабочего дня: </label>
+        <input
+          type="time"
+          id="start-time"
+          value={startTime}
+          onChange={handleStartTimeChange}
+        />
+      </div>
+
+      <div style={{ marginBottom: "10px" }}>
+        <label htmlFor="end-time">Конец рабочего дня: </label>
+        <input
+          type="time"
+          id="end-time"
+          value={endTime}
+          onChange={handleEndTimeChange}
+        />
+      </div>
+
+      <div>
+        <span>Продолжительность рабочего дня: {workDuration}</span>
+      </div>
     </div>
   );
 }
