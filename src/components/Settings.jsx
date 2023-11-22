@@ -41,7 +41,9 @@ function Settings({
       </div>
       {/* Кнопка для начала рабочего дня */}
       <div>
-        <button onClick={onStartWorkDay}>🚀Начать рабочий день</button>
+        <button onClick={onStartWorkDay} disabled>
+          🚀Начать рабочий день (soon)
+        </button>
       </div>
     </div>
   );
