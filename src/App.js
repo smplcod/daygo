@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import TaskInput from "./components/TaskInput";
 import TaskList from "./components/TaskList";
@@ -26,11 +26,54 @@ function App() {
       parseInt(task.duration.split(":")[1], 10) / 60,
   }));
 
+  // Состояния для настроек и задач
   const [tasks, setTasks] = useState(initialTasks);
   const [workTime, setWorkTime] = useState(8);
   const [startTime, setStartTime] = useState("18:00");
   const [isIntervalsEnabled, setIsIntervalsEnabled] = useState(false);
   const [isPomodoroEnabled, setIsPomodoroEnabled] = useState(false);
+  const [pomodoroDuration, setPomodoroDuration] = useState(25);
+  const [breakDuration, setBreakDuration] = useState(5);
+
+  // Загрузка и сохранение в localStorage
+  useEffect(() => {
+    const savedTasks = JSON.parse(localStorage.getItem("tasks"));
+    const savedWorkTime = localStorage.getItem("workTime");
+    const savedStartTime = localStorage.getItem("startTime");
+    const savedPomodoroEnabled = localStorage.getItem("isPomodoroEnabled");
+    const savedIntervalsEnabled = localStorage.getItem("isIntervalsEnabled");
+    const savedPomodoroDuration = localStorage.getItem("pomodoroDuration");
+    const savedBreakDuration = localStorage.getItem("breakDuration");
+
+    if (savedTasks) setTasks(savedTasks);
+    if (savedWorkTime) setWorkTime(Number(savedWorkTime));
+    if (savedStartTime) setStartTime(savedStartTime);
+    if (savedPomodoroEnabled)
+      setIsPomodoroEnabled(savedPomodoroEnabled === "true");
+    if (savedIntervalsEnabled)
+      setIsIntervalsEnabled(savedIntervalsEnabled === "true");
+    if (savedPomodoroDuration)
+      setPomodoroDuration(Number(savedPomodoroDuration));
+    if (savedBreakDuration) setBreakDuration(Number(savedBreakDuration));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem("workTime", workTime.toString());
+    localStorage.setItem("startTime", startTime);
+    localStorage.setItem("isPomodoroEnabled", isPomodoroEnabled.toString());
+    localStorage.setItem("isIntervalsEnabled", isIntervalsEnabled.toString());
+    localStorage.setItem("pomodoroDuration", pomodoroDuration.toString());
+    localStorage.setItem("breakDuration", breakDuration.toString());
+  }, [
+    tasks,
+    workTime,
+    startTime,
+    isPomodoroEnabled,
+    isIntervalsEnabled,
+    pomodoroDuration,
+    breakDuration,
+  ]);
 
   const handleAddTask = (task) => {
     setTasks((prevTasks) => [...prevTasks, task]);
@@ -47,10 +90,6 @@ function App() {
       return newTasks;
     });
   };
-
-  // Состояния для настроек Pomodoro
-  const [pomodoroDuration, setPomodoroDuration] = useState(25);
-  const [breakDuration, setBreakDuration] = useState(5);
 
   const handleTogglePomodoro = () => setIsPomodoroEnabled(!isPomodoroEnabled);
 
