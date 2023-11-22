@@ -11,13 +11,13 @@ function App() {
   // Добавляем начальные тестовые задачи
   const initialTasks = [
     { name: "ChromeExt FacebookCustom", duration: "1:00" },
-    { name: "International Passport", duration: "1:00" },
+    // { name: "International Passport", duration: "1:00" },
     { name: "BREAK", duration: "1:00" },
     { name: "State Management learning", duration: "2:00" },
     { name: "DaysGo", duration: "2:00" },
-    { name: "TapSmile", duration: "1:00" },
+    // { name: "TapSmile", duration: "1:00" },
     // { name: "InfTable", duration: "1:00" },
-    { name: "Hackathon (donate and join)", duration: "0:30" },
+    // { name: "Hackathon (donate and join)", duration: "0:30" },
     // { name: "TypeScript", duration: "1:00" },
   ].map((task) => ({
     ...task,
