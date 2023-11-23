@@ -99,8 +99,10 @@ function App() {
 
   return (
     <>
-      <h1>Распределение времени</h1>
-      <h3>Реалистичный план времени</h3>
+      <h1>DaysGo v1.5.1</h1>
+      <h3>Пыланирование и реалистичное распределение времени</h3>
+      <br />
+      <h2>Итоговый план:</h2>
       <TimeDistribution
         tasks={tasks}
         workTime={workTime}
@@ -108,10 +110,9 @@ function App() {
         isIntervalsEnabled={isIntervalsEnabled}
       />
       <TimeInput onSetWorkTime={setWorkTime} setStartTime2={setStartTime} />
+      <h2>Изначальные задачи:</h2>
       <TaskInput onAddTask={handleAddTask} />
 
-      <h2>Список задач</h2>
-      <h3>Желаемое время</h3>
       <TaskList
         tasks={tasks}
         onRemoveTask={handleRemoveTask}
@@ -120,7 +121,7 @@ function App() {
         pomodoroDuration={pomodoroDuration}
         breakDuration={breakDuration}
       />
-      <h2>Настройки</h2>
+      <h2>Настройки:</h2>
       <Settings
         isIntervalsEnabled={isIntervalsEnabled}
         onToggleIntervals={() => setIsIntervalsEnabled(!isIntervalsEnabled)}
@@ -135,11 +136,18 @@ function App() {
           onBreakChange={handleBreakChange}
         />
       )}
+      <h2>Помощь:</h2>
       <p>
         Сервис позволяет введя задачи и желаемую их длительность, а также часы
         начала/завершения рабочего дня получить реалистичное рассписание
         учитывая относительный объем каждой из задач. Данные сохраняются для
         возобновления после повторного использования сервиса.
+      </p>
+      <br />
+      <h3>Что нового?</h3>
+      <p>
+        При двойном нажатии по названию задачи в списке задач — редактирование.
+        По нажатию Enter — сохранение.
       </p>
     </>
   );

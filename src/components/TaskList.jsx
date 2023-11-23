@@ -94,8 +94,8 @@ function TaskList({
       <tbody>
         <tr>
           <th>Задача</th>
-          <th colSpan="3">Время</th>
-          {isPomodoroEnabled && <th>Помидоры</th>}
+          <th colSpan="3">Желаемое время</th>
+          {isPomodoroEnabled && <th>Кол-во помидоров</th>}
         </tr>
         {tasks.map((task, index) => (
           <tr key={index}>
