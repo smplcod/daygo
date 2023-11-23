@@ -99,7 +99,12 @@ function TaskList({
         </tr>
         {tasks.map((task, index) => (
           <tr key={index}>
-            <td onDoubleClick={() => handleDoubleClick(index, task.name)}>
+            <td
+              onDoubleClick={() => handleDoubleClick(index, task.name)}
+              style={
+                task.duration === 0 ? { textDecoration: "line-through" } : null
+              }
+            >
               {editableTaskIndex === index ? (
                 <input
                   type="text"
