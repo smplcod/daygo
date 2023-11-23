@@ -29,6 +29,9 @@ h2 {
 ul li::before {
   content: '• ';
 }
+ul li::after {
+  content: ';';
+}
 
 
 :root {

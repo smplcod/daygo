@@ -11,14 +11,8 @@ import ThemeToggle from "./components/ThemeToggle";
 function App() {
   // Добавляем начальные тестовые задачи
   const initialTasks = [
-    { name: "BlueBeGone", duration: "1:00" },
-    // { name: "International Passport", duration: "1:00" },
-    { name: "🏖️BREAK🏖️ ", duration: "1:00" },
-    { name: "State Management learning", duration: "2:00" },
-    { name: "DaysGo", duration: "2:00" },
-    // { name: "TapSmile", duration: "1:00" },
-    // { name: "InfTable", duration: "1:00" },
-    // { name: "TypeScript", duration: "1:00" },
+    { name: "Task1", duration: "1:00" },
+    { name: "Task2", duration: "2:00" },
   ].map((task) => ({
     ...task,
     duration:
@@ -30,6 +24,7 @@ function App() {
   const [tasks, setTasks] = useState(initialTasks);
   const [workTime, setWorkTime] = useState(8);
   const [startTime, setStartTime] = useState("18:00");
+  const [endTime, setEndTime] = useState("22:00");
   const [isIntervalsEnabled, setIsIntervalsEnabled] = useState(false);
   const [isPomodoroEnabled, setIsPomodoroEnabled] = useState(false);
   const [pomodoroDuration, setPomodoroDuration] = useState(25);
@@ -45,6 +40,7 @@ function App() {
     const savedIntervalsEnabled = localStorage.getItem("isIntervalsEnabled");
     const savedPomodoroDuration = localStorage.getItem("pomodoroDuration");
     const savedBreakDuration = localStorage.getItem("breakDuration");
+    const savedEndTime = localStorage.getItem("endTime");
 
     if (savedTasks) setTasks(savedTasks);
     if (savedWorkTime) setWorkTime(Number(savedWorkTime));
@@ -56,6 +52,7 @@ function App() {
     if (savedPomodoroDuration)
       setPomodoroDuration(Number(savedPomodoroDuration));
     if (savedBreakDuration) setBreakDuration(Number(savedBreakDuration));
+    if (savedEndTime) setEndTime(savedEndTime);
 
     const savedTheme = localStorage.getItem("theme") || "light";
     setTheme(savedTheme);
@@ -70,6 +67,7 @@ function App() {
     localStorage.setItem("isIntervalsEnabled", isIntervalsEnabled.toString());
     localStorage.setItem("pomodoroDuration", pomodoroDuration.toString());
     localStorage.setItem("breakDuration", breakDuration.toString());
+    localStorage.setItem("endTime", endTime);
   }, [
     tasks,
     workTime,
@@ -78,6 +76,7 @@ function App() {
     isIntervalsEnabled,
     pomodoroDuration,
     breakDuration,
+    endTime,
   ]);
 
   const handleAddTask = (task) => {
@@ -116,7 +115,12 @@ function App() {
         startTime={startTime}
         isIntervalsEnabled={isIntervalsEnabled}
       />
-      <TimeInput onSetWorkTime={setWorkTime} setStartTime2={setStartTime} />
+      <TimeInput
+        onSetWorkTime={setWorkTime}
+        setStartTime2={setStartTime}
+        endTime={endTime}
+        setEndTime={setEndTime}
+      />
       <h2>Изначальные задачи:</h2>
       <TaskInput onAddTask={handleAddTask} />
 
@@ -153,8 +157,9 @@ function App() {
       <br />
       <h3>Что нового?</h3>
       <ul>
+        <li>Изменение порядка задач перетаскиваением</li>
         <li>Темная тема</li>
-        <li>Двойной клик по задаче — редактирование. Enter — сохранение.</li>
+        <li>Двойной клик по задаче — редактирование. Enter — сохранение</li>
       </ul>
     </>
   );

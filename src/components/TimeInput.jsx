@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-function TimeInput({ onSetWorkTime, setStartTime2 }) {
+function TimeInput({ onSetWorkTime, setStartTime2, endTime, setEndTime }) {
   const getCurrentTime = () => {
     const now = new Date();
     return now.toLocaleTimeString("en-GB", {
@@ -32,14 +32,19 @@ function TimeInput({ onSetWorkTime, setStartTime2 }) {
   const [startTime, setStartTime] = useState("6:00");
   // const [startTime, setStartTime] = useState(getCurrentTime());
 
-  const [endTime, setEndTime] = useState(() =>
-    getEndTimeByAddingHours(getCurrentTime(), 8)
-  );
+  // const [endTime, setEndTime] = useState(() =>
+  //   getEndTimeByAddingHours(getCurrentTime(), 8)
+  // );
+  const savedEndTime = localStorage.getItem("endTime");
+  // const [endTime, setEndTime] = useState(
+  //   savedEndTime || getEndTimeByAddingHours(getCurrentTime(), 8)
+  // );
   const [workDuration, setWorkDuration] = useState("");
 
   const handleStartTimeChange = (event) => {
-    setStartTime(event.target.value);
-    setStartTime2(startTime);
+    const newStartTime = event.target.value;
+    setStartTime(newStartTime);
+    setStartTime2(newStartTime); // Обновляем endTime в TimeInput
   };
 
   const handleEndTimeChange = (event) => {
@@ -48,7 +53,7 @@ function TimeInput({ onSetWorkTime, setStartTime2 }) {
 
   useEffect(() => {
     setStartTime2(startTime);
-  }, [startTime]);
+  }, [startTime, endTime]);
   useEffect(() => {
     const [startHours, startMinutes] = startTime.split(":").map(Number);
     const [endHours, endMinutes] = endTime.split(":").map(Number);
