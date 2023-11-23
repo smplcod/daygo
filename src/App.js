@@ -34,6 +34,7 @@ function App() {
   const [isPomodoroEnabled, setIsPomodoroEnabled] = useState(false);
   const [pomodoroDuration, setPomodoroDuration] = useState(25);
   const [breakDuration, setBreakDuration] = useState(5);
+  const [theme, setTheme] = useState("light");
 
   // Загрузка и сохранение в localStorage
   useEffect(() => {
@@ -55,6 +56,10 @@ function App() {
     if (savedPomodoroDuration)
       setPomodoroDuration(Number(savedPomodoroDuration));
     if (savedBreakDuration) setBreakDuration(Number(savedBreakDuration));
+
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
+    document.documentElement.classList.toggle("dark", savedTheme === "dark");
   }, []);
 
   useEffect(() => {
@@ -100,8 +105,8 @@ function App() {
 
   return (
     <>
-      <ThemeToggle />
-      <h1>DaysGo v1.6.1</h1>
+      <ThemeToggle theme={theme} setTheme={setTheme} />
+      <h1>DaysGo v1.6.4</h1>
       <h3>Пыланирование и реалистичное распределение времени</h3>
       <br />
       <h2>Итоговый план:</h2>
@@ -147,10 +152,10 @@ function App() {
       </p>
       <br />
       <h3>Что нового?</h3>
-      <p>
-        При двойном нажатии по названию задачи в списке задач — редактирование.
-        По нажатию Enter — сохранение.
-      </p>
+      <ul>
+        <li>Темная тема</li>
+        <li>Двойной клик по задаче — редактирование. Enter — сохранение.</li>
+      </ul>
     </>
   );
 }

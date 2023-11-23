@@ -1,8 +1,11 @@
 import React from "react";
 
-function ThemeToggle() {
+function ThemeToggle({ theme, setTheme }) {
   const toggleTheme = () => {
-    document.documentElement.classList.toggle("dark");
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    document.documentElement.classList.toggle("dark", newTheme === "dark");
+    localStorage.setItem("theme", newTheme);
   };
 
   return (
