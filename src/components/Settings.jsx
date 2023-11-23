@@ -8,15 +8,7 @@ function Settings({
   onStartWorkDay, // Функция, которая будет вызвана при нажатии на кнопку
 }) {
   return (
-    <div
-      style={{
-        border: "1px solid black",
-        padding: "10px",
-        backgroundColor: "#f0f0f0",
-        width: "300px",
-        marginBottom: "10px",
-      }}
-    >
+    <div className="panel with-margin">
       <div style={{ marginBottom: "5px" }}>
         <label>
           <input

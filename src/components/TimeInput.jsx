@@ -67,14 +67,7 @@ function TimeInput({ onSetWorkTime, setStartTime2 }) {
   }, [startTime, endTime, onSetWorkTime]);
 
   return (
-    <div
-      style={{
-        border: "1px solid black",
-        padding: "10px",
-        backgroundColor: "#f0f0f0",
-        width: "300px",
-      }}
-    >
+    <div className="panel">
       <label>
         Начало рабочего дня:
         <input type="time" value={startTime} onChange={handleStartTimeChange} />

@@ -6,6 +6,7 @@ import TimeDistribution from "./components/TimeDistribution";
 import TimeInput from "./components/TimeInput";
 import Settings from "./components/Settings";
 import PomodoroSettings from "./components/PomodoroSettings";
+import ThemeToggle from "./components/ThemeToggle";
 
 function App() {
   // Добавляем начальные тестовые задачи
@@ -99,6 +100,7 @@ function App() {
 
   return (
     <>
+      <ThemeToggle />
       <h1>DaysGo v1.5.1</h1>
       <h3>Пыланирование и реалистичное распределение времени</h3>
       <br />

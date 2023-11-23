@@ -25,3 +25,46 @@ body {
 h2 {
   margin-top: 10px;
 }
+
+:root {
+  --main: #333;
+  --main-rgb: 51, 51, 51;
+  color-scheme: light;
+  --border-color: black;
+  --background-color: #f0f0f0;
+}
+
+body {
+  color: var(--main);
+}
+
+form {
+  background-color: rgba(var(--main-rgb), .2);
+}
+
+input[type="email"],
+textarea,
+button {
+  color: var(--main);
+}
+
+.panel {
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  background-color: var(--background-color);
+  width: 300px;
+}
+
+.panel.with-margin {
+  margin-bottom: 10px;
+}
+
+/* Dark theme */
+.dark {
+  --main: #fff;
+  --main-rgb: 255, 255, 255;
+  color-scheme: dark;
+  --border-color: white;
+  --background-color: #333;
+}
+

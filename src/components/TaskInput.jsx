@@ -25,14 +25,7 @@ function TaskInput({ onAddTask }) {
   };
 
   return (
-    <div
-      style={{
-        border: "1px solid black",
-        padding: "10px",
-        backgroundColor: "#f0f0f0",
-        width: "300px",
-      }}
-    >
+    <div className="panel">
       <input
         type="time"
         step="60"
