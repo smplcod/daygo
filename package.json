@@ -1,7 +1,7 @@
 {
-  "name": "daysgo1-4-15",
+  "name": "daysgo",
   "homepage": "https://smplcod.github.io/daygo",
-  "version": "0.1.0",
+  "version": "1.6.8",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
