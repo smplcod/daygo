@@ -49,7 +49,7 @@ button {
 }
 
 .panel {
-  border: 1px solid var(--border-color);
+  border:0.5px solid var(--border-color);
   padding: 10px;
   background-color: var(--background-color);
   width: 300px;
