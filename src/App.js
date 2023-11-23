@@ -17,7 +17,6 @@ function App() {
     { name: "DaysGo", duration: "2:00" },
     // { name: "TapSmile", duration: "1:00" },
     // { name: "InfTable", duration: "1:00" },
-    // { name: "Hackathon (donate and join)", duration: "0:30" },
     // { name: "TypeScript", duration: "1:00" },
   ].map((task) => ({
     ...task,
