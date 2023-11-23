@@ -1,26 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-function TimeInput({ onSetWorkTime, setStartTime2, endTime, setEndTime }) {
-  const getCurrentTime = () => {
-    const now = new Date();
-    return now.toLocaleTimeString("en-GB", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    });
-  };
-
-  const getEndTimeByAddingHours = (startTime, hoursToAdd) => {
-    const [startHours, startMinutes] = startTime.split(":").map(Number);
-    const endDate = new Date();
-    endDate.setHours(startHours + hoursToAdd, startMinutes, 0);
-    return endDate.toLocaleTimeString("en-GB", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    });
-  };
-
+function TimeInput({ onSetWorkTime, setStartTime, endTime, setEndTime }) {
   const formatDuration = (minutes) => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
@@ -29,58 +9,70 @@ function TimeInput({ onSetWorkTime, setStartTime2, endTime, setEndTime }) {
     }`;
   };
 
-  const [startTime, setStartTime] = useState("6:00");
-  // const [startTime, setStartTime] = useState(getCurrentTime());
+  // Загружаем начальные значения из localStorage
+  const savedStartTime = localStorage.getItem("startTime") || "06:00";
+  const savedEndTime = localStorage.getItem("endTime") || "22:00";
 
-  // const [endTime, setEndTime] = useState(() =>
-  //   getEndTimeByAddingHours(getCurrentTime(), 8)
-  // );
-  const savedEndTime = localStorage.getItem("endTime");
-  // const [endTime, setEndTime] = useState(
-  //   savedEndTime || getEndTimeByAddingHours(getCurrentTime(), 8)
-  // );
+  const [startTimeState, setStartTimeState] = useState(savedStartTime);
+  const [endTimeState, setEndTimeState] = useState(savedEndTime);
   const [workDuration, setWorkDuration] = useState("");
+
+  useEffect(() => {
+    setStartTime(startTimeState); // Обновляем startTime в родительском компоненте
+    setEndTime(endTimeState); // Обновляем endTime в родительском компоненте
+  }, [startTimeState, endTimeState, setStartTime, setEndTime]);
+
+  useEffect(() => {
+    const calculateWorkDuration = () => {
+      const [startHours, startMinutes] = startTimeState.split(":").map(Number);
+      const [endHours, endMinutes] = endTimeState.split(":").map(Number);
+
+      let workMinutes =
+        endHours * 60 + endMinutes - (startHours * 60 + startMinutes);
+      if (workMinutes < 0) {
+        workMinutes =
+          24 * 60 -
+          (startHours * 60 + startMinutes) +
+          (endHours * 60 + endMinutes);
+      }
+
+      setWorkDuration(formatDuration(workMinutes));
+      onSetWorkTime(workMinutes / 60);
+    };
+
+    calculateWorkDuration();
+  }, [startTimeState, endTimeState, onSetWorkTime]);
 
   const handleStartTimeChange = (event) => {
     const newStartTime = event.target.value;
-    setStartTime(newStartTime);
-    setStartTime2(newStartTime); // Обновляем endTime в TimeInput
+    setStartTimeState(newStartTime);
+    localStorage.setItem("startTime", newStartTime); // Сохраняем в localStorage
   };
 
   const handleEndTimeChange = (event) => {
-    setEndTime(event.target.value);
+    const newEndTime = event.target.value;
+    setEndTimeState(newEndTime);
+    localStorage.setItem("endTime", newEndTime); // Сохраняем в localStorage
   };
-
-  useEffect(() => {
-    setStartTime2(startTime);
-  }, [startTime, endTime]);
-  useEffect(() => {
-    const [startHours, startMinutes] = startTime.split(":").map(Number);
-    const [endHours, endMinutes] = endTime.split(":").map(Number);
-
-    let workMinutes =
-      endHours * 60 + endMinutes - (startHours * 60 + startMinutes);
-    if (workMinutes < 0) {
-      workMinutes =
-        24 * 60 -
-        (startHours * 60 + startMinutes) +
-        (endHours * 60 + endMinutes);
-    }
-
-    setWorkDuration(formatDuration(workMinutes));
-    onSetWorkTime(workMinutes / 60);
-  }, [startTime, endTime, onSetWorkTime]);
 
   return (
     <div className="panel">
       <label>
         Начало рабочего дня:
-        <input type="time" value={startTime} onChange={handleStartTimeChange} />
+        <input
+          type="time"
+          value={startTimeState}
+          onChange={handleStartTimeChange}
+        />
       </label>
       <br />
       <label>
         Конец рабочего дня:
-        <input type="time" value={endTime} onChange={handleEndTimeChange} />
+        <input
+          type="time"
+          value={endTimeState}
+          onChange={handleEndTimeChange}
+        />
       </label>
       <p>Длительность рабочего дня: {workDuration}</p>
     </div>

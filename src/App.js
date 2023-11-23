@@ -117,7 +117,7 @@ function App() {
       />
       <TimeInput
         onSetWorkTime={setWorkTime}
-        setStartTime2={setStartTime}
+        setStartTime={setStartTime} // Изменено с setStartTime2 на setStartTime
         endTime={endTime}
         setEndTime={setEndTime}
       />
