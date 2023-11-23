@@ -69,7 +69,7 @@ button {
   --main: #fff;
   --main-rgb: 255, 255, 255;
   color-scheme: dark;
-  --border-color: white;
+  --border-color: rgb(84, 84, 84);
   --background-color: #333;
 }
 
