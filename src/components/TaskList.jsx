@@ -89,6 +89,32 @@ function TaskList({
     }
   };
 
+  // Функции для обработки перетаскивания
+  const handleDragStart = (event, index) => {
+    event.dataTransfer.setData("draggedTaskIndex", index);
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const handleDrop = (event, targetIndex) => {
+    event.preventDefault();
+    const draggedTaskIndex = event.dataTransfer.getData("draggedTaskIndex");
+    reorderTasks(draggedTaskIndex, targetIndex);
+  };
+
+  const reorderTasks = (draggedTaskIndex, targetIndex) => {
+    const newTasks = [...tasks];
+    const draggedTask = newTasks.splice(draggedTaskIndex, 1)[0];
+    newTasks.splice(targetIndex, 0, draggedTask);
+
+    // Обновляем задачи через переданный обработчик
+    newTasks.forEach((task, index) => {
+      onUpdateTime(index, task);
+    });
+  };
+
   return (
     <table style={{ width: "100%", textAlign: "left" }}>
       <tbody>
@@ -98,13 +124,17 @@ function TaskList({
           {isPomodoroEnabled && <th>Кол-во помидоров</th>}
         </tr>
         {tasks.map((task, index) => (
-          <tr key={index}>
-            <td
-              onDoubleClick={() => handleDoubleClick(index, task.name)}
-              style={
-                task.duration === 0 ? { textDecoration: "line-through" } : null
-              }
-            >
+          <tr
+            key={index}
+            draggable
+            onDragStart={(e) => handleDragStart(e, index)}
+            onDragOver={handleDragOver}
+            onDrop={(e) => handleDrop(e, index)}
+            style={
+              task.duration === 0 ? { textDecoration: "line-through" } : null
+            }
+          >
+            <td onDoubleClick={() => handleDoubleClick(index, task.name)}>
               {editableTaskIndex === index ? (
                 <input
                   type="text"
