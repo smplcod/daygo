@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/daygo/static/css/main.99bd3b78.css",
-    "main.js": "/daygo/static/js/main.67809fe5.js",
+    "main.js": "/daygo/static/js/main.15eb7ddc.js",
     "static/media/bg2.webp": "/daygo/static/media/bg2.86ef3c83f53d97905da8.webp",
     "index.html": "/daygo/index.html",
     "main.99bd3b78.css.map": "/daygo/static/css/main.99bd3b78.css.map",
-    "main.67809fe5.js.map": "/daygo/static/js/main.67809fe5.js.map"
+    "main.15eb7ddc.js.map": "/daygo/static/js/main.15eb7ddc.js.map"
   },
   "entrypoints": [
     "static/css/main.99bd3b78.css",
-    "static/js/main.67809fe5.js"
+    "static/js/main.15eb7ddc.js"
   ]
 }

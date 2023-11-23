@@ -17,7 +17,7 @@ function TaskList({
     return `${h}:${m < 10 ? "0" : ""}${m}`;
   };
 
-  // Функция для увеличения длительности задачи на час
+  // Функции для увеличения и уменьшения длительности задачи
   const incrementHours = (index) => {
     onUpdateTime(index, {
       ...tasks[index],
@@ -25,7 +25,6 @@ function TaskList({
     });
   };
 
-  // Функция для уменьшения длительности задачи на час
   const decrementHours = (index) => {
     if (tasks[index].duration >= 1) {
       onUpdateTime(index, {
@@ -35,7 +34,6 @@ function TaskList({
     }
   };
 
-  // Функция для увеличения длительности задачи на 5 минут
   const incrementMinutes = (index) => {
     const newDuration = tasks[index].duration + 5 / 60;
     onUpdateTime(index, {
@@ -44,7 +42,6 @@ function TaskList({
     });
   };
 
-  // Функция для уменьшения длительности задачи на 5 минут
   const decrementMinutes = (index) => {
     if (tasks[index].duration * 60 >= 5) {
       const newDuration = tasks[index].duration - 5 / 60;
@@ -55,28 +52,9 @@ function TaskList({
     }
   };
 
-  // Функция для вычисления общего времени задач
-  const calculateTotalDuration = () => {
-    const totalDuration = tasks.reduce((sum, task) => sum + task.duration, 0);
-    return formatDuration(totalDuration);
-  };
-  // useEffect(() => {
-  //   console.log(parseInt(pomodoroDuration) + parseInt(breakDuration));
-  // }, [tasks, pomodoroDuration, breakDuration]);
-
-  // // Функция для вычисления количества помидоров для задачи
-  // const getPomodorosForTask = (duration) => {
-  //   return Math.floor(duration / (pomodoroDuration + breakDuration));
-  // };
-  // // Функция для создания строки с эмодзи помидоров
-  // const renderPomodoros = (duration) => {
-  //   const pomodoroCount = getPomodorosForTask(duration * 60);
-  //   return `${"🍅".repeat(pomodoroCount)} ${pomodoroCount}`;
-  // };
-
+  // Функция для рендеринга количества помидоров
   const renderPomodoros = useCallback(
     (duration) => {
-      // Вычисляем количество помидоров для задачи
       const getPomodorosForTask = (duration) => {
         return Math.floor(
           duration /
@@ -84,14 +62,32 @@ function TaskList({
         );
       };
 
-      // Получаем количество помидоров и создаем строку с эмодзи
       const pomodoroCount = getPomodorosForTask(duration * 60);
       return `${"🍅".repeat(pomodoroCount)} ${pomodoroCount}`;
     },
-    [pomodoroDuration, breakDuration] // зависимости для useCallback
+    [pomodoroDuration, breakDuration]
   );
 
-  const totalDuration = calculateTotalDuration();
+  // Состояния и функции для редактирования названия задачи
+  const [editableTaskIndex, setEditableTaskIndex] = useState(-1);
+  const [editableTaskName, setEditableTaskName] = useState("");
+
+  const handleDoubleClick = (index, taskName) => {
+    setEditableTaskIndex(index);
+    setEditableTaskName(taskName);
+  };
+
+  const handleTaskNameChange = (event) => {
+    setEditableTaskName(event.target.value);
+  };
+
+  const handleKeyPress = (event, index) => {
+    if (event.key === "Enter") {
+      const updatedTask = { ...tasks[index], name: editableTaskName };
+      onUpdateTime(index, updatedTask);
+      setEditableTaskIndex(-1);
+    }
+  };
 
   return (
     <table style={{ width: "100%", textAlign: "left" }}>
@@ -103,14 +99,26 @@ function TaskList({
         </tr>
         {tasks.map((task, index) => (
           <tr key={index}>
-            <td>
-              <span
-                onClick={() => onRemoveTask(index)}
-                style={{ cursor: "pointer" }}
-              >
-                ❌
-              </span>
-              {task.name}
+            <td onDoubleClick={() => handleDoubleClick(index, task.name)}>
+              {editableTaskIndex === index ? (
+                <input
+                  type="text"
+                  value={editableTaskName}
+                  onChange={handleTaskNameChange}
+                  onKeyPress={(e) => handleKeyPress(e, index)}
+                  autoFocus
+                />
+              ) : (
+                <>
+                  <span
+                    onClick={() => onRemoveTask(index)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    ❌
+                  </span>
+                  {task.name}
+                </>
+              )}
             </td>
             <td>
               <div className={styles.buttonGroup}>
