@@ -105,7 +105,7 @@ function App() {
   return (
     <>
       <ThemeToggle theme={theme} setTheme={setTheme} />
-      <h1>DaysGo v1.6.8</h1>
+      <h1>DaysGo v2.0.0 (2.0.1 soon)</h1>
       <h3>Пыланирование и реалистичное распределение времени</h3>
       <br />
       <h2>Итоговый план:</h2>
