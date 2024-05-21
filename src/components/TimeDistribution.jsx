@@ -9,9 +9,12 @@ const TimeDistribution = ({
   const convertToMinutes = (hours) => hours * 60;
 
   const convertMinutesToTime = (minutes) => {
-    const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
-    return `${hours}:${mins < 10 ? "0" : ""}${mins}`;
+    const totalMinutes = minutes % (24 * 60); // Используем модуль, чтобы обрабатывать превышение 24 часов
+    const hours = Math.floor(totalMinutes / 60);
+    const mins = totalMinutes % 60;
+    return `${hours < 10 ? `0${hours}` : hours}:${
+      mins < 10 ? `0${mins}` : mins
+    }`;
   };
 
   const formatTimeInterval = (start, duration) => {
