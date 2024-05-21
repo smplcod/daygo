@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/daygocopy2/static/css/main.08315b9e.css",
-    "main.js": "/daygocopy2/static/js/main.f115679b.js",
-    "static/media/bg2.webp": "/daygocopy2/static/media/bg2.86ef3c83f53d97905da8.webp",
-    "index.html": "/daygocopy2/index.html",
-    "main.08315b9e.css.map": "/daygocopy2/static/css/main.08315b9e.css.map",
-    "main.f115679b.js.map": "/daygocopy2/static/js/main.f115679b.js.map"
+    "main.css": "/daygo/static/css/main.29834584.css",
+    "main.js": "/daygo/static/js/main.1c2c0094.js",
+    "static/media/bg2.webp": "/daygo/static/media/bg2.86ef3c83f53d97905da8.webp",
+    "index.html": "/daygo/index.html",
+    "main.29834584.css.map": "/daygo/static/css/main.29834584.css.map",
+    "main.1c2c0094.js.map": "/daygo/static/js/main.1c2c0094.js.map"
   },
   "entrypoints": [
-    "static/css/main.08315b9e.css",
-    "static/js/main.f115679b.js"
+    "static/css/main.29834584.css",
+    "static/js/main.1c2c0094.js"
   ]
 }
